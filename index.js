@@ -21,7 +21,7 @@ const genlog = new Logger('general')
 const { stdin: input, stdout: output } = require('process')
 // const rl = readline.createInterface({ input, output });
 const ircclient = new irc.Client(config.irc.server, config.irc.nick, {
-    channels: config.irc.channels,
+    // channels: config.irc.channels,
     realName: config.irc.realName,
     userName: config.irc.username,
 })
@@ -65,6 +65,9 @@ ircclient.addListener('quit', function (nick, reason, channels, message) {
 
 ircclient.addListener('registered', function () {
     ircRegisteredJoinHandler(ircclient)
+    for (const channel of config.irc.channels) {
+        ircclient.join(channel)
+    }
 })
 
 discordclient.on('ready', function (ready) {

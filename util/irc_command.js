@@ -12,8 +12,29 @@ class IRCCommand {
 
     getArgs(message, from) {
         let relayed = from == 'McObot'
+        let distel = from == 'MCO_Discord' || from == 'MCO_Telegram'
         let args
         let msg
+        if (distel) {
+            // Discord/Telegram message (both have the same format)
+            msg = message.split(' ').slice(1, 2).join(' ')
+            if (this.isHidden(message)) {
+                args = message
+                    .split('> ')[1]
+                    .slice(this.prefix.length + 1)
+                    .trim()
+                    .split(/ +/)
+            } else {
+                args = message
+                    .split('> ')[1]
+                    .slice(this.prefix.length)
+                    .trim()
+                    .split(/ +/)
+            }
+        } else {
+            args = message.slice(this.prefix.length).trim().split(/ +/)
+        }
+
         if (this.isHidden(message)) {
             args = message
                 .slice(this.prefix.length + 1)
@@ -22,8 +43,6 @@ class IRCCommand {
         } else if (relayed) {
             msg = message.split(' ').slice(2).join(' ')
             args = msg.slice(this.prefix.length).trim().split(/ +/)
-        } else {
-            args = message.slice(this.prefix.length).trim().split(/ +/)
         }
 
         args.shift()
@@ -62,7 +81,11 @@ class IRCCommand {
 
     getUser(message, from) {
         let args = this.getArgs(message, from)
-        if (args.length == 0 && from != 'McObot') {
+        if ((args.length == 1) & (from == 'MCO_Discord')) {
+            return args[0]
+        } else if (args.length == 0 && from == 'MCO_Discord') {
+            return message.split('>')[0].replace('<', '')
+        } else if (args.length == 0 && from != 'McObot') {
             return from
         } else if (args.length >= 1 && from != 'McObot') {
             return args[0]

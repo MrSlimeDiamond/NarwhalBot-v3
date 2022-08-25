@@ -3,6 +3,7 @@ const Discord = require('discord.js')
 const config = require('../../config.json')
 const Logger = require('../../util/logger')
 const genlog = new Logger('general')
+const admins = require("../../admins.json")
 
 class Ping extends IRCCommand {
     constructor(irc) {
@@ -16,12 +17,18 @@ class Ping extends IRCCommand {
         let args = this.getArgs(message, from)
         let a = this
         ircclient.whois(from, function (data) {
-            if (
-                (data.nick == 'SlimeDiamond' &&
-                    data.host == 'basher.zenoc.net') ||
-                (data.nick == 'SlimeDiamond' &&
-                    data.host == 'netadmin.example.org')
-            ) {
+            for (var admin in admins) {
+                if (admin == from) {
+                    for (var i in admins[from].hosts) {
+                        if (admins[from].hosts[i] == data.host) {
+                            stopBots()
+                            return
+                        }
+                    }
+                }
+            }
+            nope()
+            function stopBots() {
                 a.sendIRCMessage(to, 'Stopping bots...')
                 genlog.info('Stopping bots...')
                 ircclient.disconnect(
@@ -29,7 +36,9 @@ class Ping extends IRCCommand {
                 )
                 discordclient.destroy()
                 process.exit()
-            } else {
+            } 
+            
+            function nope() {
                 a.sendIRCMessage(to, 'You do not have permission to use this!')
                 return
             }

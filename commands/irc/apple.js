@@ -15,7 +15,7 @@ class AppleCommand extends IRCCommand {
         this.sendIRCMessage(
             to,
             'The one and only Senator of MCO',
-            this.isHidden(message)
+            this.isHidden(message, from)
         )
         const channel = discordclient.channels.cache.get(
             config.discord.ingame_chat_id

@@ -18,7 +18,10 @@ class RandomplayerCommand extends IRCCommand {
         const result = await request.json()
 
         if (result == null) {
-            this.sendIRCMessage(`Nobody is on MinecraftOnline right now!`)
+            this.sendIRCMessage(
+                `Nobody is on MinecraftOnline right now!`,
+                this.isHidden(message, from)
+            )
             const embed = new Discord.MessageEmbed()
                 .setColor('#32a852')
                 .setTitle('Random Player')
@@ -30,7 +33,11 @@ class RandomplayerCommand extends IRCCommand {
         const r = Math.round(Math.random(0, Object.entries(result).length))
         let userIGN = result[Object.keys(result)[r]].name
 
-        this.sendIRCMessage(to, `Random player on MCO: ${userIGN}`)
+        this.sendIRCMessage(
+            to,
+            `Random player on MCO: ${userIGN}`,
+            this.isHidden(message, from)
+        )
         const embed = new Discord.MessageEmbed()
             .setColor('#32a852')
             .setTitle('Random player')

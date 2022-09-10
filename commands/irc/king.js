@@ -12,7 +12,11 @@ class KingCommand extends IRCCommand {
     }
 
     onCommand(ircclient, discordclient, from, to, message) {
-        this.sendIRCMessage(to, 'TheDemetri is the king of MinecraftOnline!')
+        this.sendIRCMessage(
+            to,
+            'TheDemetri is the king of MinecraftOnline!',
+            this.isHidden(message, from)
+        )
         const embed = new Discord.MessageEmbed()
             .setColor('#32a852')
             .setTitle('The King of MCO')

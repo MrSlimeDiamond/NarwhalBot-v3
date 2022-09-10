@@ -35,21 +35,33 @@ class IRCCommandHandler {
                 (message.split('> ')[1].startsWith('#' + this.prefix) &&
                     from == 'MCO_Telegram') ||
                 (message.split(' ')[2].startsWith(this.prefix) &&
-                    from == 'McObot')
+                    from == 'McObot') ||
+                (message.split(' ')[2].startsWith(this.prefix) &&
+                    from == 'Silly') ||
+                (message.split(' ')[2].startsWith('#' + this.prefix) &&
+                    from == 'Silly')
             ) {
                 let relayed = from == 'McObot'
                 let distel = from == 'MCO_Discord' || from == 'MCO_Telegram'
+                let newDiscord = from == 'Silly'
                 let hidden =
                     message.startsWith('#') ||
-                    (distel && message.split(' ')[1].startsWith('#'))
+                    (distel && message.split(' ')[1].startsWith('#')) ||
+                    (newDiscord && message.split(' ')[2].startsWith('#'))
 
                 let args
                 let msg
 
-                if (distel) {
+                if (hidden) {
+                    args = message
+                        .slice(this.prefix.length + 1)
+                        .trim()
+                        .split(/ +/)
+                } else if (distel) {
                     // Discord/Telegram message (both have the same format)
                     msg = message.split(' ').slice(1, 2).join(' ')
                     if (hidden) {
+                        console.log('its hidden')
                         args = message
                             .split('> ')[1]
                             .slice(this.prefix.length + 1)
@@ -66,15 +78,27 @@ class IRCCommandHandler {
                     args = message.slice(this.prefix.length).trim().split(/ +/)
                 }
 
-                if (hidden) {
-                    args = message
-                        .slice(this.prefix.length + 1)
-                        .trim()
-                        .split(/ +/)
-                } else if (relayed) {
+                if (relayed) {
                     // msg = message.split(' ').slice(2, 3).join(' ')
                     msg = message.split('> ')[1]
                     args = msg.slice(this.prefix.length).trim().split(/ +/)
+                }
+                if (newDiscord) {
+                    msg = message.split('> ')[1]
+                    args = msg.slice(this.prefix.length).trim().split(/ +/)
+                    if (hidden) {
+                        args = message
+                            .split('> ')[1]
+                            .slice(this.prefix.length + 1)
+                            .trim()
+                            .split(/ +/)
+                    } else {
+                        args = message
+                            .split('> ')[1]
+                            .slice(this.prefix.length)
+                            .trim()
+                            .split(/ +/)
+                    }
                 }
                 let commandName = args.shift().toLowerCase()
 
@@ -96,6 +120,8 @@ class IRCCommandHandler {
                     } else if (from == 'MCO_Discord') {
                         var b = message.split('>')
                         sender = b[0].replace('<', '')
+                    } else if (a.length >= 3 && from == 'Silly') {
+                        sender = a[1].replace('<', '').replace('>', '')
                     } else {
                         sender = from
                     }

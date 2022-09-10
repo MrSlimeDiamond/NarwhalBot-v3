@@ -15,7 +15,7 @@ class CoolCommand extends IRCCommand {
         this.sendIRCMessage(
             to,
             'Selimbits is the coolest player!',
-            this.isHidden(message)
+            this.isHidden(message, from)
         )
         const channel = discordclient.channels.cache.get(
             config.discord.ingame_chat_id

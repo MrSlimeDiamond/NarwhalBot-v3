@@ -20,7 +20,7 @@ class BancountCommand extends IRCCommand {
         this.sendIRCMessage(
             to,
             `MinecraftOnline has ${bcBody.bancount} bans.`,
-            this.isHidden(message)
+            this.isHidden(message, from)
         )
         const embed = new Discord.MessageEmbed()
             .setColor('#32a852')

@@ -65,9 +65,6 @@ ircclient.addListener('quit', function (nick, reason, channels, message) {
 
 ircclient.addListener('registered', function () {
     ircRegisteredJoinHandler(ircclient)
-    for (const channel of config.irc.channels) {
-        ircclient.join(channel)
-    }
 })
 
 discordclient.on('ready', function (ready) {

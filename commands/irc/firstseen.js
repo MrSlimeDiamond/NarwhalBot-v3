@@ -26,7 +26,7 @@ class LastseenCommand extends IRCCommand {
             this.sendIRCMessage(
                 to,
                 'Could not find that player!',
-                this.isHidden(message)
+                this.isHidden(message, from)
             )
             const embed = new Discord.MessageEmbed()
                 .setColor('#a83232')
@@ -40,7 +40,7 @@ class LastseenCommand extends IRCCommand {
             this.sendIRCMessage(
                 to,
                 "SlimeDiamond's API had an internal server error. Please contact him!",
-                this.isHidden(message)
+                this.isHidden(message, from)
             )
             const embed = new Discord.MessageEmbed()
                 .setColor('#a83232')
@@ -58,7 +58,7 @@ class LastseenCommand extends IRCCommand {
                 this.sendIRCMessage(
                     to,
                     `${username} has not got firstseen! Try an updated username, maybe?`,
-                    this.isHidden(message)
+                    this.isHidden(message, from)
                 )
                 const embed = new Discord.MessageEmbed()
                     .setColor('#a83232')
@@ -79,7 +79,7 @@ class LastseenCommand extends IRCCommand {
                     date,
                     now
                 )} ago)`,
-                this.isHidden(message)
+                this.isHidden(message, from)
             )
             const embed = new Discord.MessageEmbed()
                 .setColor('#32a852')

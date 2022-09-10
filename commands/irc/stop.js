@@ -3,7 +3,7 @@ const Discord = require('discord.js')
 const config = require('../../config.json')
 const Logger = require('../../util/logger')
 const genlog = new Logger('general')
-const admins = require("../../admins.json")
+const admins = require('../../admins.json')
 
 class Ping extends IRCCommand {
     constructor(irc) {
@@ -36,8 +36,8 @@ class Ping extends IRCCommand {
                 )
                 discordclient.destroy()
                 process.exit()
-            } 
-            
+            }
+
             function nope() {
                 a.sendIRCMessage(to, 'You do not have permission to use this!')
                 return

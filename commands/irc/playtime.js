@@ -22,7 +22,7 @@ class PlaytimeCommand extends IRCCommand {
             this.sendIRCMessage(
                 to,
                 'Could not find that player!',
-                this.isHidden(message)
+                this.isHidden(message, from)
             )
             const embed = new Discord.MessageEmbed()
                 .setColor('#a83232')
@@ -36,7 +36,7 @@ class PlaytimeCommand extends IRCCommand {
             this.sendIRCMessage(
                 to,
                 "SlimeDiamond's API had an internal server error. Please contact him!",
-                this.isHidden(message)
+                this.isHidden(message, from)
             )
             const embed = new Discord.MessageEmbed()
                 .setColor('#a83232')
@@ -54,7 +54,7 @@ class PlaytimeCommand extends IRCCommand {
                 this.sendIRCMessage(
                     to,
                     `${username} has not got playtime! Try an updated username, maybe?`,
-                    this.isHidden(message)
+                    this.isHidden(message, from)
                 )
                 const embed = new Discord.MessageEmbed()
                     .setColor('#a83232')
@@ -73,7 +73,7 @@ class PlaytimeCommand extends IRCCommand {
                 `${username} has ${Math.round(
                     playtimeHours
                 )} hours of playtime on MinecraftOnline`,
-                this.isHidden(message)
+                this.isHidden(message, from)
             )
             const embed = new Discord.MessageEmbed()
                 .setColor('#32a852')

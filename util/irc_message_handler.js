@@ -61,7 +61,6 @@ class IRCCommandHandler {
                     // Discord/Telegram message (both have the same format)
                     msg = message.split(' ').slice(1, 2).join(' ')
                     if (hidden) {
-                        console.log('its hidden')
                         args = message
                             .split('> ')[1]
                             .slice(this.prefix.length + 1)

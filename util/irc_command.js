@@ -93,7 +93,6 @@ class IRCCommand {
     }
 
     isHidden(message, from) {
-        console.log(from)
         return (
             message.startsWith('#') ||
             (from == 'MCO_Discord' && message.split(' ')[1].startsWith('#')) ||

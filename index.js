@@ -1,3 +1,4 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const irc = require('irc')
 const fs = require('fs')
 const readline = require('readline')

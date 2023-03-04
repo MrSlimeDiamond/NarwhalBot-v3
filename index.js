@@ -36,7 +36,7 @@ genlog.info('Starting bot')
 readline.emitKeypressEvents(process.stdin)
 if (process.stdin.isTTY) process.stdin.setRawMode(true)
 
-ircclient.addListener('messageCreate', function (from, to, message) {
+ircclient.addListener('message', function (from, to, message) {
     ircMessageEventHandler(ircclient, discordclient, from, to, message)
 })
 

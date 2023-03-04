@@ -4,6 +4,7 @@ const logger = new Logger('irc')
 const fs = require('fs')
 const moment = require('moment')
 const config = require('../../config.json')
+const { channel } = require('diagnostics_channel')
 module.exports = function (ircclient, discordclient, from, to, message) {
     let ds = '[' + moment().format('HH:mm:ss') + '] '
     if (to == '#narwhalbot') {
@@ -54,5 +55,11 @@ module.exports = function (ircclient, discordclient, from, to, message) {
         )
     }
     const handler = new IRCCommandHandler(this)
-    handler.handle(ircclient, discordclient, from, to, message)
+    try {
+        handler.handle(ircclient, discordclient, from, to, message)
+    } catch (error) {
+        channel.send("There was an error executing this command!")
+        console.error(error)
+    }
+    
 }

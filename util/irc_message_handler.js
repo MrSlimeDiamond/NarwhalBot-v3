@@ -134,6 +134,8 @@ class IRCCommandHandler {
                 return false
             }
         } catch (error) {
+            // really cursed workaround to console spam that shouldn't even happen in the first place
+            if (error == "TypeError: Cannot read properties of undefined (reading 'startsWith')") return
             console.error(error)
         }
     }

@@ -30,11 +30,11 @@ class BansuntilCommand extends IRCCommand {
         } else {
             let args = this.getArgs(message, from)
             if (args.length == 0) {
-                this.sendIRCMessage(to, 'Usage: !bansuntil <number>')
+                this.sendIRCMessage(to, `Usage: ${config.irc.prefix}bansuntil <number>`)
                 const embed = new Discord.MessageEmbed()
                     .setColor('#a83232')
                     .setTitle('Incorrect usage')
-                    .setDescription('Usage: `!bansuntil <number>`')
+                    .setDescription(`Usage: \`${config.irc.prefix}bansuntil <number>\``)
                     .setFooter(config.discord.footer_text)
 
                 this.sendDiscordMessage({ embeds: [embed] }, discordclient)
@@ -42,16 +42,16 @@ class BansuntilCommand extends IRCCommand {
             } else {
                 let bansuntil = parseInt(args[0])
                 let bansuntilnum = bansuntil - parseInt(bancount)
-                if (bansuntilnum == NaN || bansuntilnum == 'NaN') {
+                if (bansuntilnum == NaN || bansuntilnum == 'NaN') { // why dont you work what the hell?!
                     this.sendIRCMessage(
                         to,
-                        'Usage: !bansuntil <number> (you put something other than a number)'
+                        `Usage: ${config.irc.prefix}bansuntil <number> (you put something other than a number)`
                     )
                     const embed = new Discord.MessageEmbed()
                         .setColor('#a83232')
                         .setTitle('Incorrect usage')
                         .setDescription(
-                            'Usage: `!bansuntil <number>` (you put something other than a number) '
+                            `Usage: ${config.irc.prefix}bansuntil <number> (you put something other than a number)`
                         )
                         .setFooter(config.discord.footer_text)
 

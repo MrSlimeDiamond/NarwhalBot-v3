@@ -3,6 +3,7 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 const Discord = require('discord.js')
 const config = require('../../config.json')
+const api = require("../../util/api")
 
 class BansuntilCommand extends IRCCommand {
     constructor(irc) {
@@ -13,8 +14,7 @@ class BansuntilCommand extends IRCCommand {
     }
 
     async onCommand(ircclient, discordclient, from, to, message) {
-        let request = fetch('https://zenoc.net/api/mco/bancount')
-        let response = await (await request).json()
+        let response = await api("bancount")
         let { bancount } = response
 
         if (!bancount) {

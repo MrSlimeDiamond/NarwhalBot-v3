@@ -3,6 +3,7 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 const Discord = require('discord.js')
 const config = require('../../config.json')
+const api = require("../../util/api")
 
 class RandomplayerCommand extends IRCCommand {
     constructor(irc) {
@@ -14,8 +15,7 @@ class RandomplayerCommand extends IRCCommand {
     }
 
     async onCommand(ircclient, discordclient, from, to, message) {
-        const request = await fetch('https://zenoc.net/api/mco/playerlist')
-        const result = await request.json()
+        const result = await api("playerlist")
 
         if (result == null) {
             this.sendIRCMessage(

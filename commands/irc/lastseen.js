@@ -4,6 +4,7 @@ const timeDelta = require('time-delta')
 const Discord = require('discord.js')
 const config = require('../../config.json')
 const IRCCommand = require('../../util/irc_command')
+const api = require("../../util/api")
 const di = timeDelta.create({
     locale: 'en', // default
 })
@@ -20,8 +21,7 @@ class LastseenCommand extends IRCCommand {
     async onCommand(ircclient, discordclient, from, to, message) {
         let user = this.getUser(message, from)
 
-        let request = await fetch('https://zenoc.net/api/mco/player/' + user)
-        let body = await request.json()
+        let body = await api("player/" + user)
         if (body.error == 'Could not find player') {
             this.sendIRCMessage(
                 to,

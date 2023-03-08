@@ -1,6 +1,5 @@
 const config = require('../../config.json')
 const Table = require('cli-table')
-const update_cli = require('../../util/update_cli')
 const Logger = require('../../util/logger')
 const logger = new Logger('irc')
 const fs = require('fs')

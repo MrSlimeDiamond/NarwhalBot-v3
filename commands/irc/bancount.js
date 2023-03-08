@@ -3,6 +3,7 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 const Discord = require('discord.js')
 const config = require('../../config.json')
+const api = require("../../util/api")
 
 class BancountCommand extends IRCCommand {
     constructor(irc) {
@@ -14,8 +15,7 @@ class BancountCommand extends IRCCommand {
     }
 
     async onCommand(ircclient, discordclient, from, to, message) {
-        let bcReq = await fetch('https://zenoc.net/api/mco/bancount')
-        let bcBody = await bcReq.json()
+        let bcBody = await api("bancount")
 
         this.sendIRCMessage(
             to,

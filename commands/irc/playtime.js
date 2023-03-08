@@ -3,6 +3,7 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 const Discord = require('discord.js')
 const config = require('../../config.json')
+const api = require("../../util/api")
 
 class PlaytimeCommand extends IRCCommand {
     constructor(irc) {
@@ -16,8 +17,7 @@ class PlaytimeCommand extends IRCCommand {
     async onCommand(ircclient, discordclient, from, to, message) {
         let user = this.getUser(message, from)
 
-        let request = await fetch('https://zenoc.net/api/mco/player/' + user)
-        let body = await request.json()
+        let body = await api("player/" + user)
         if (body.error == 'Could not find player') {
             this.sendIRCMessage(
                 to,

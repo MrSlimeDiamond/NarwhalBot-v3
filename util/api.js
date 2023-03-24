@@ -1,5 +1,6 @@
 const config = require("../config.json")
 const apiURL = config.api.apiURL
+const fetch = require("node-fetch")
 
 
 /**

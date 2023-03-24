@@ -23,6 +23,7 @@ class IRCCommandHandler {
 
     handle(ircclient, discordclient, from, to, message) {
         try {
+            // Catch relayed messages
             if (
                 message.startsWith('#' + this.prefix) ||
                 message.startsWith(this.prefix) ||
@@ -136,6 +137,7 @@ class IRCCommandHandler {
         } catch (error) {
             // really cursed workaround to console spam that shouldn't even happen in the first place
             if (error == "TypeError: Cannot read properties of undefined (reading 'startsWith')") return
+            if (error == "TypeError: Cannot read property 'startsWith' of undefined") return
             console.error(error)
         }
     }
